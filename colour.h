@@ -1,45 +1,40 @@
 #ifndef COLOUR_H
 #define COLOUR_H
 
-#define RED 13
-#define GREEN 11
-#define BLUE 12
+typedef struct {
+	double red;
+	double green;
+	double blue;
+	double lightness;
+	int hue;
+	double saturation;
+} colour;
 
-typedef struct colour{
-  int red;
-  int green;
-  int blue;
-};
 
-colour new_colour(int r, int g, int b)
-{
-  colour* c = malloc(sizeof(colour));
-  c->red = r;
-  c->green = g;
-  c->blue = b;
-  return *c;
-}
+//https://www.rapidtables.com/convert/color/rgb-to-hsl.html rgb to hsl conversion refrence
 
-colour blue = new_colour(0, 0, 10);
-colour red = new_colour(10, 0, 0);
-colour green = new_colour(0, 10, 0);
-colour yellow = new_colour(7, 5, 0);
-colour aqua = new_colour(0, 10, 1);
-colour pink = new_colour(10, 1, 1);
-colour purple = new_colour(5, 0, 5);
+//Function to move the value into the range 0 < x < 1
+//expects a value that has some decimal component
+double testCrush(double i);
 
-void colourChange(colour& b)
-{
-  digitalWrite(RED, HIGH);
-  delay(b.red);
-  digitalWrite(RED, LOW);
-  digitalWrite(GREEN, HIGH);
-  delay(b.green);
-  digitalWrite(GREEN, LOW);
-  digitalWrite(BLUE, HIGH);
-  delay(b.blue);
-  digitalWrite(BLUE, LOW);
-  
-}
+//tests the values of red, green and blue to calculate 
+double test(double i, double tmp1, double tmp2);
+
+void maxMin(double* arr, double* max, double* min, char* rgb);
+
+//function to calculate the hue of a colour given its red green and blue values
+double calculate_hue(double* a, char rgb, double max, double min);
+
+//function to calculate the saturation
+double calculate_saturation(double lightness, double max, double min);
+
+double calculate_lightness(double max, double min);
+
+colour rgb_colour(int r, int g, int b);
+
+colour hsl_colour(int hue, double saturation, double lightness);
+
+void colourChange(colour* c, int ret[]);
+
 
 #endif
